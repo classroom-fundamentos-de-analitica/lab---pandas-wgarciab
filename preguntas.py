@@ -22,7 +22,10 @@ def pregunta_01():
     40
 
     """
-    return
+
+    result = tbl0.shape[0]
+
+    return result
 
 
 def pregunta_02():
@@ -33,7 +36,10 @@ def pregunta_02():
     4
 
     """
-    return
+
+    result = tbl0.shape[1]
+
+    return result
 
 
 def pregunta_03():

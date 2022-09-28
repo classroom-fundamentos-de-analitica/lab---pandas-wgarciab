@@ -223,7 +223,12 @@ def pregunta_11():
     38   38      d,e
     39   39    a,d,f
     """
-    return
+
+    tbl1_copy = tbl1.copy()
+    tbl1_copy = tbl1_copy.sort_values(by = "_c4")
+    result = tbl1_copy.groupby(["_c0"], as_index = False).agg({"_c4": ",".join})
+
+    return result
 
 
 def pregunta_12():

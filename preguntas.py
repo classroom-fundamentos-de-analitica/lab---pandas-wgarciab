@@ -8,6 +8,7 @@ Utilice los archivos `tbl0.tsv`, `tbl1.tsv` y `tbl2.tsv`, para resolver las preg
 
 """
 import pandas as pd
+import numpy as np
 
 tbl0 = pd.read_csv("tbl0.tsv", sep="\t")
 tbl1 = pd.read_csv("tbl1.tsv", sep="\t")
@@ -56,7 +57,10 @@ def pregunta_03():
     Name: _c1, dtype: int64
 
     """
-    return
+
+    result = tbl0.groupby('_c1').size()
+
+    return result
 
 
 def pregunta_04():
@@ -71,7 +75,14 @@ def pregunta_04():
     E    4.785714
     Name: _c2, dtype: float64
     """
-    return
+
+    result = tbl0.groupby("_c1").agg(
+        {
+            "_c2": np.mean,
+        }
+    )
+
+    return result
 
 
 def pregunta_05():
@@ -88,7 +99,14 @@ def pregunta_05():
     E    9
     Name: _c2, dtype: int64
     """
-    return
+
+    result = tbl0.groupby("_c1").agg(
+        {
+            "_c2": np.max,
+        }
+    )
+
+    return result
 
 
 def pregunta_06():

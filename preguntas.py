@@ -110,7 +110,11 @@ def pregunta_06():
     ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 
     """
-    return
+
+    result = tbl1["_c4"].unique()
+    result = sorted([item.upper() for item in result])
+
+    return result
 
 
 def pregunta_07():
@@ -126,7 +130,10 @@ def pregunta_07():
     E    67
     Name: _c2, dtype: int64
     """
-    return
+
+    result = tbl0.groupby("_c1")["_c2"].sum()
+
+    return result
 
 
 def pregunta_08():
@@ -144,7 +151,12 @@ def pregunta_08():
     39   39   E    5  1998-01-26    44
 
     """
-    return
+
+    tbl0_copy = tbl0.copy()
+    tbl0_copy["suma"] = tbl0_copy["_c0"] + tbl0_copy["_c2"]
+    result = tbl0_copy
+
+    return result
 
 
 def pregunta_09():

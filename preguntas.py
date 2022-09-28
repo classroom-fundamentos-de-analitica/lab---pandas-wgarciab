@@ -246,7 +246,14 @@ def pregunta_12():
     38   38                    eee:0,fff:9,iii:2
     39   39                    ggg:3,hhh:8,jjj:5
     """
-    return
+
+    tbl2_copy = tbl2.copy()
+    tbl2_copy["_c5b"] = tbl2_copy["_c5b"].apply(str)
+    tbl2_copy = tbl2_copy.sort_values(by = "_c5a")
+    tbl2_copy["_c5"] = tbl2_copy[["_c5a", "_c5b"]].agg(":".join, axis=1)
+    result = tbl2_copy.groupby(["_c0"], as_index = False).agg({"_c5": ",".join})
+
+    return result
 
 
 def pregunta_13():
@@ -263,4 +270,8 @@ def pregunta_13():
     E    275
     Name: _c5b, dtype: int64
     """
-    return
+
+    tbl0_tbl2_joined = pd.merge(tbl0, tbl2, on = "_c0")
+    result = tbl0_tbl2_joined.groupby("_c1")["_c5b"].sum()
+
+    return result

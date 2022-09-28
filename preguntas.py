@@ -76,11 +76,7 @@ def pregunta_04():
     Name: _c2, dtype: float64
     """
 
-    result = tbl0.groupby("_c1").agg(
-        {
-            "_c2": np.mean,
-        }
-    )
+    result = tbl0.groupby("_c1")["_c2"].mean()
 
     return result
 
@@ -100,11 +96,7 @@ def pregunta_05():
     Name: _c2, dtype: int64
     """
 
-    result = tbl0.groupby("_c1").agg(
-        {
-            "_c2": np.max,
-        }
-    )
+    result = tbl0.groupby("_c1")["_c2"].max()
 
     return result
 

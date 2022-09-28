@@ -202,7 +202,7 @@ def pregunta_10():
     tbl0_copy = tbl0.copy()
     tbl0_copy["_c2"] = tbl0_copy["_c2"].apply(str)
     tbl0_copy = tbl0_copy.sort_values(by = "_c2")
-    result = tbl0_copy.groupby(["_c1"], as_index = False).agg({"_c2": ":".join})
+    result = tbl0_copy.groupby(["_c1"]).agg({"_c2": ":".join})
 
     return result
 

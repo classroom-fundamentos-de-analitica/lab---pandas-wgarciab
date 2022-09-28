@@ -174,8 +174,15 @@ def pregunta_09():
     39   39   E    5  1998-01-26  1998
 
     """
-    return
 
+    tbl0_copy = tbl0.copy()
+    #tbl0_copy["_c3"] = pd.to_datetime(tbl0_copy["_c3"], format = "%Y-%m-%d")
+    #tbl0_copy["year"] = tbl0_copy["_c3"].dt.year
+    #tbl0_copy['year'] = pd.DatetimeIndex(tbl0_copy['_c3']).year
+    result = tbl0_copy
+
+    return result
+#print(pregunta_09())
 
 def pregunta_10():
     """
@@ -191,7 +198,13 @@ def pregunta_10():
     3   D                  1:2:3:5:5:7
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
-    return
+
+    tbl0_copy = tbl0.copy()
+    tbl0_copy["_c2"] = tbl0_copy["_c2"].apply(str)
+    tbl0_copy = tbl0_copy.sort_values(by = "_c2")
+    result = tbl0_copy.groupby(["_c1"], as_index = False).agg({"_c2": ":".join})
+
+    return result
 
 
 def pregunta_11():

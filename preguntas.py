@@ -176,13 +176,13 @@ def pregunta_09():
     """
 
     tbl0_copy = tbl0.copy()
-    #tbl0_copy["_c3"] = pd.to_datetime(tbl0_copy["_c3"], format = "%Y-%m-%d")
-    #tbl0_copy["year"] = tbl0_copy["_c3"].dt.year
-    #tbl0_copy['year'] = pd.DatetimeIndex(tbl0_copy['_c3']).year
+    tbl0_copy["_c3"] = tbl0_copy["_c3"].replace("1999-02-29", "1999-02-28")
+    tbl0_copy["_c3"] = pd.to_datetime(tbl0_copy["_c3"], format = "%Y-%m-%d")
+    tbl0_copy["year"] = pd.DatetimeIndex(tbl0_copy["_c3"]).year
     result = tbl0_copy
 
     return result
-#print(pregunta_09())
+
 
 def pregunta_10():
     """

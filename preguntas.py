@@ -8,6 +8,7 @@ Utilice los archivos `tbl0.tsv`, `tbl1.tsv` y `tbl2.tsv`, para resolver las preg
 
 """
 import pandas as pd
+import numpy as np
 
 tbl0 = pd.read_csv("tbl0.tsv", sep="\t")
 tbl1 = pd.read_csv("tbl1.tsv", sep="\t")
@@ -22,7 +23,10 @@ def pregunta_01():
     40
 
     """
-    return
+
+    result = tbl0.shape[0]
+
+    return result
 
 
 def pregunta_02():
@@ -33,7 +37,10 @@ def pregunta_02():
     4
 
     """
-    return
+
+    result = tbl0.shape[1]
+
+    return result
 
 
 def pregunta_03():
@@ -50,7 +57,10 @@ def pregunta_03():
     Name: _c1, dtype: int64
 
     """
-    return
+
+    result = tbl0.groupby('_c1').size()
+
+    return result
 
 
 def pregunta_04():
@@ -65,7 +75,10 @@ def pregunta_04():
     E    4.785714
     Name: _c2, dtype: float64
     """
-    return
+
+    result = tbl0.groupby("_c1")["_c2"].mean()
+
+    return result
 
 
 def pregunta_05():
@@ -82,7 +95,10 @@ def pregunta_05():
     E    9
     Name: _c2, dtype: int64
     """
-    return
+
+    result = tbl0.groupby("_c1")["_c2"].max()
+
+    return result
 
 
 def pregunta_06():
@@ -94,7 +110,11 @@ def pregunta_06():
     ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 
     """
-    return
+
+    result = tbl1["_c4"].unique()
+    result = sorted([item.upper() for item in result])
+
+    return result
 
 
 def pregunta_07():
@@ -110,7 +130,10 @@ def pregunta_07():
     E    67
     Name: _c2, dtype: int64
     """
-    return
+
+    result = tbl0.groupby("_c1")["_c2"].sum()
+
+    return result
 
 
 def pregunta_08():
@@ -128,7 +151,12 @@ def pregunta_08():
     39   39   E    5  1998-01-26    44
 
     """
-    return
+
+    tbl0_copy = tbl0.copy()
+    tbl0_copy["suma"] = tbl0_copy["_c0"] + tbl0_copy["_c2"]
+    result = tbl0_copy
+
+    return result
 
 
 def pregunta_09():
@@ -146,7 +174,15 @@ def pregunta_09():
     39   39   E    5  1998-01-26  1998
 
     """
-    return
+
+    tbl0_copy = tbl0.copy()
+    tbl0_copy["_c3"] = tbl0_copy["_c3"].replace("1999-02-29", "1999-02-28")
+    tbl0_copy["_c3"] = pd.to_datetime(tbl0_copy["_c3"], format = "%Y-%m-%d")
+    tbl0_copy["year"] = pd.DatetimeIndex(tbl0_copy["_c3"]).year
+    tbl0_copy["year"] = tbl0_copy["year"].apply(str)
+    result = tbl0_copy
+
+    return result
 
 
 def pregunta_10():
@@ -163,7 +199,13 @@ def pregunta_10():
     3   D                  1:2:3:5:5:7
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
-    return
+
+    tbl0_copy = tbl0.copy()
+    tbl0_copy["_c2"] = tbl0_copy["_c2"].apply(str)
+    tbl0_copy = tbl0_copy.sort_values(by = "_c2")
+    result = tbl0_copy.groupby(["_c1"]).agg({"_c2": ":".join})
+
+    return result
 
 
 def pregunta_11():
@@ -182,7 +224,12 @@ def pregunta_11():
     38   38      d,e
     39   39    a,d,f
     """
-    return
+
+    tbl1_copy = tbl1.copy()
+    tbl1_copy = tbl1_copy.sort_values(by = "_c4")
+    result = tbl1_copy.groupby(["_c0"], as_index = False).agg({"_c4": ",".join})
+
+    return result
 
 
 def pregunta_12():
@@ -200,7 +247,14 @@ def pregunta_12():
     38   38                    eee:0,fff:9,iii:2
     39   39                    ggg:3,hhh:8,jjj:5
     """
-    return
+
+    tbl2_copy = tbl2.copy()
+    tbl2_copy["_c5b"] = tbl2_copy["_c5b"].apply(str)
+    tbl2_copy = tbl2_copy.sort_values(by = "_c5a")
+    tbl2_copy["_c5"] = tbl2_copy[["_c5a", "_c5b"]].agg(":".join, axis=1)
+    result = tbl2_copy.groupby(["_c0"], as_index = False).agg({"_c5": ",".join})
+
+    return result
 
 
 def pregunta_13():
@@ -217,4 +271,8 @@ def pregunta_13():
     E    275
     Name: _c5b, dtype: int64
     """
-    return
+
+    tbl0_tbl2_joined = pd.merge(tbl0, tbl2, on = "_c0")
+    result = tbl0_tbl2_joined.groupby("_c1")["_c5b"].sum()
+
+    return result
